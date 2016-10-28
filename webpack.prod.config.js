@@ -2,13 +2,11 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     entry: [
-        'webpack-dev-server/client?http://127.0.0.1:8080/',
-        'webpack/hot/only-dev-server',
         './src'
     ],
-    out: {
+    output: {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js'
     },
@@ -26,7 +24,16 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
     ]
 }
