@@ -23,8 +23,6 @@ if (process.env.NODE_ENV !== 'production') {
         log: console.log,
         path: '/__webpack__hmr'
     }))
-
-
 }
 
 app.listen(port)
